@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cognitive Psychology — The Science of the Mind</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #0ea5e9;
+    --primary-light: #38bdf8;
+    --primary-dark: #0284c7;
+    --accent-cyan: #22d3ee;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --bg-dark: #0a1118;
+    --bg-card: #0f1c2a;
+    --bg-card-hover: #162536;
+    --text-main: #e0ecf5;
+    --text-muted: #94a3b0;
+    --shadow: 0 25px 80px rgba(0,0,0,0.5);
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #050d14 0%, #0a1824 50%, #081828 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  .presentation {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--bg-dark);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%);
+    padding: 45px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    position: relative;
+    letter-spacing: -1px;
+  }
+  .header .subtitle {
+    font-size: 1.15em;
+    color: rgba(255,255,255,0.9);
+    margin-top: 10px;
+    font-weight: 300;
+    position: relative;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .header .year-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 0.85em;
+    margin-top: 15px;
+    border: 1px solid rgba(255,255,255,0.25);
+    position: relative;
+  }
+
+  .nav {
+    display: flex;
+    background: rgba(0,0,0,0.35);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav button {
+    flex: 1;
+    min-width: 130px;
+    padding: 18px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+  }
+  .nav button:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.03);
+  }
+  .nav button.active {
+    color: var(--primary-light);
+    border-bottom-color: var(--primary);
+    background: linear-gradient(to top, rgba(14,165,233,0.12), transparent);
+  }
+  .nav button .icon {
+    font-size: 1.3em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .content {
+    padding: 45px 50px;
+    min-height: 520px;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .slide.active {
+    display: block;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .slide h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-light);
+    font-size: 2em;
+    margin-bottom: 28px;
+    padding-left: 18px;
+    border-left: 5px solid var(--primary);
+    font-weight: 700;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 35px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light), var(--accent-cyan));
+    border-radius: 3px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 26px;
+    padding-left: 22px;
+    padding-bottom: 6px;
+    transition: transform 0.3s;
+    cursor: default;
+  }
+  .timeline-item:hover {
+    transform: translateX(5px);
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    background: var(--primary);
+    border-radius: 50%;
+    border: 4px solid var(--bg-dark);
+    box-shadow: 0 0 0 2px var(--primary);
+    transition: all 0.3s;
+  }
+  .timeline-item:hover::before {
+    background: var(--accent-amber);
+    box-shadow: 0 0 0 3px var(--accent-amber), 0 0 20px rgba(245,158,11,0.4);
+  }
+  .timeline-year {
+    color: var(--primary-light);
+    font-weight: 700;
+    font-size: 1.15em;
+    font-family: 'Playfair Display', serif;
+  }
+  .timeline-item p {
+    margin-top: 4px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    font-size: 0.97em;
+  }
+  .timeline-item p strong {
+    color: var(--text-main);
+  }
+
+  .quote-box {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(34,211,238,0.08));
+    border-left: 5px solid var(--primary);
+    padding: 28px 32px;
+    margin: 28px 0;
+    border-radius: 0 14px 14px 0;
+    font-style: italic;
+    font-size: 1.25em;
+    line-height: 1.7;
+    font-family: 'Playfair Display', serif;
+    color: #f0f0f0;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-box::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 5em;
+    color: rgba(14,165,233,0.15);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+  .quote-box .author {
+    text-align: right;
+    font-style: normal;
+    color: var(--primary-light);
+    margin-top: 14px;
+    font-size: 0.85em;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .concept-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .concept-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(14,165,233,0.3);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  }
+  .concept-card:hover::before {
+    transform: scaleX(1);
+  }
+  .concept-card h4 {
+    color: var(--primary-light);
+    margin: 0 0 10px 0;
+    font-size: 1.15em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-card p {
+    margin: 0;
+    font-size: 0.92em;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .pioneer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .pioneer-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 26px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pioneer-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(14,165,233,0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .pioneer-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3em;
+    color: var(--primary-light);
+    margin-bottom: 4px;
+  }
+  .pioneer-card .years {
+    font-size: 0.82em;
+    color: var(--accent-amber);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .pioneer-card p {
+    font-size: 0.93em;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .pioneer-card p strong {
+    color: var(--text-main);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 0.95em;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, rgba(14,165,233,0.35), rgba(14,165,233,0.2));
+    color: #fff;
+    padding: 16px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .comparison-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.6;
+  }
+  .comparison-table tr:nth-child(even) td {
+    background: rgba(255,255,255,0.02);
+  }
+  .comparison-table tr:hover td {
+    background: rgba(14,165,233,0.06);
+    transition: background 0.3s;
+  }
+  .comparison-table td:first-child {
+    font-weight: 600;
+    color: var(--accent-amber);
+    width: 20%;
+  }
+  .comparison-table td:nth-child(2) {
+    color: var(--text-main);
+    width: 40%;
+  }
+  .comparison-table td:nth-child(3) {
+    color: var(--text-muted);
+    width: 40%;
+  }
+
+  .legacy-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .legacy-list li {
+    padding: 16px 0 16px 38px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    line-height: 1.7;
+    font-size: 0.97em;
+    transition: all 0.3s;
+    border-radius: 0 8px 8px 0;
+  }
+  .legacy-list li:hover {
+    background: rgba(255,255,255,0.02);
+    padding-left: 44px;
+  }
+  .legacy-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.3em;
+    transition: all 0.3s;
+  }
+  .legacy-list li:hover::before {
+    left: 6px;
+    color: var(--accent-amber);
+  }
+  .legacy-list li strong {
+    color: var(--primary-light);
+  }
+
+  .badge-container {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .fact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--accent-amber);
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 0.85em;
+    font-weight: 500;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .fact-badge:hover {
+    background: rgba(245, 158, 11, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(245,158,11,0.15);
+  }
+
+  .highlight {
+    color: var(--accent-amber);
+    font-weight: 600;
+  }
+
+  .intro-text {
+    font-size: 1.08em;
+    line-height: 1.85;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .intro-text strong {
+    color: var(--text-main);
+  }
+
+  .footer-callout {
+    margin-top: 28px;
+    text-align: center;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(34,211,238,0.08));
+    border-radius: 14px;
+    border: 1px solid rgba(14,165,233,0.15);
+  }
+  .footer-callout strong {
+    color: var(--primary-light);
+    font-size: 1.15em;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .slide-counter {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .nav-arrows {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px 25px;
+    gap: 15px;
+  }
+  .nav-arrows button {
+    background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(14,165,233,0.1));
+    border: 1px solid rgba(14,165,233,0.3);
+    color: var(--primary-light);
+    padding: 12px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+  }
+  .nav-arrows button:hover {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(14,165,233,0.3);
+  }
+  .nav-arrows button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.9em; }
+    .content { padding: 25px 20px; min-height: 400px; }
+    .nav button { min-width: 100px; padding: 14px 10px; font-size: 0.8em; }
+    .nav button .icon { font-size: 1.1em; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .pioneer-grid { grid-template-columns: 1fr; }
+    .comparison-table { font-size: 0.85em; }
+    .comparison-table th, .comparison-table td { padding: 12px 10px; }
+    .nav-arrows { padding: 0 20px 20px; }
+    .nav-arrows button { padding: 10px 20px; font-size: 0.85em; }
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--primary-dark); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+</style>
+</head>
+<body>
+
+<div class="presentation">
+  <div class="header">
+    <h1>Cognitive Psychology</h1>
+    <div class="subtitle">The Science of Mental Processes — The Cognitive Revolution</div>
+    <div class="year-badge">1956 — Present</div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 16.6%"></div>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="showSlide(0)">
+      <span class="icon">🚀</span>Revolution
+    </button>
+    <button onclick="showSlide(1)">
+      <span class="icon">👤</span>Pioneers
+    </button>
+    <button onclick="showSlide(2)">
+      <span class="icon">🧠</span>What Is It?
+    </button>
+    <button onclick="showSlide(3)">
+      <span class="icon">💡</span>Key Concepts
+    </button>
+    <button onclick="showSlide(4)">
+      <span class="icon">⚖️</span>vs Behaviorism
+    </button>
+    <button onclick="showSlide(5)">
+      <span class="icon">🏛️</span>Legacy
+    </button>
+  </div>
+
+  <div class="content">
+    <!-- Slide 1: The Cognitive Revolution -->
+    <div class="slide active">
+      <h2>The Cognitive Revolution</h2>
+      <div class="quote-box">
+        Cognition refers to all the processes by which the sensory input is transformed, reduced, elaborated, stored, recovered, and used.
+        <div class="author">— Ulric Neisser, <em>Cognitive Psychology</em> (1967)</div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-year">1956</span>
+          <p>The <strong>"Magical Year"</strong> — George Miller published "The Magical Number Seven, Plus or Minus Two" on memory limits. Noam Chomsky delivered his devastating review of Skinner's <em>Verbal Behavior</em>, proving language cannot be explained by conditioning alone. Newell & Simon unveiled the Logic Theorist — the first AI program.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1958</span>
+          <p><strong>Donald Broadbent</strong> published <em>Perception and Communication</em>, introducing the filter model of attention — the first information-processing model of the mind.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1960</span>
+          <p><strong>Jerome Bruner</strong> founded the Center for Cognitive Studies at Harvard with George Miller. The term "cognitive psychology" began gaining traction in academic circles.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1967</span>
+          <p><strong>Ulric Neisser</strong> published the book <em>Cognitive Psychology</em> — the first textbook to use the term, officially naming and defining the field. He is widely considered the <strong>"father of cognitive psychology."</strong></p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1969</span>
+          <p><strong>Allan Paivio</strong> introduced the dual-coding theory, showing that visual and verbal information are processed through separate but interconnected systems.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1970s–80s</span>
+          <p>The field exploded with models of <strong>working memory</strong> (Baddeley & Hitch), <strong>schema theory</strong> (Bartlett), <strong>cognitive neuroscience</strong> (brain imaging), and <strong>connectionism</strong> (parallel distributed processing).</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">1990s–Present</span>
+          <p>Cognitive psychology merged with neuroscience to become <strong>cognitive neuroscience</strong>. fMRI and EEG allow real-time observation of brain activity during mental tasks. AI and machine learning continue to mirror and inform cognitive models.</p>
+        </div>
+      </div>
+      <div class="badge-container">
+        <span class="fact-badge">🖥️ Computer Metaphor</span>
+        <span class="fact-badge">🧪 Information Processing</span>
+        <span class="fact-badge">🧠 Mind = Software</span>
+        <span class="fact-badge">📊 7±2 (Miller, 1956)</span>
+        <span class="fact-badge">🤖 AI & Psychology Merge</span>
+      </div>
+    </div>
+
+    <!-- Slide 2: Key Pioneers -->
+    <div class="slide">
+      <h2>The Pioneers of Cognitive Psychology</h2>
+      <div class="pioneer-grid">
+        <div class="pioneer-card">
+          <div class="name">Ulric Neisser</div>
+          <div class="years">1928 — 2012</div>
+          <p>The <strong>"father of cognitive psychology."</strong> Born in Germany, raised in the US. His 1967 book <em>Cognitive Psychology</em> gave the field its name and identity. Later became a critic of his own field, arguing for <strong>ecological validity</strong> — studying cognition in real-world contexts, not just laboratories.</p>
+        </div>
+        <div class="pioneer-card">
+          <div class="name">George A. Miller</div>
+          <div class="years">1920 — 2012</div>
+          <p>His 1956 paper <strong>"The Magical Number Seven"</strong> became one of the most cited papers in psychology. Co-founded the Harvard Center for Cognitive Studies with Bruner. Pioneered the study of <strong>working memory capacity</strong> and later helped develop WordNet, a lexical database for AI.</p>
+        </div>
+        <div class="pioneer-card">
+          <div class="name">Noam Chomsky</div>
+          <div class="years">1928 — Present</div>
+          <p>A linguist who delivered the <strong>fatal blow to behaviorism</strong>. His 1959 review of Skinner's <em>Verbal Behavior</em> proved that language acquisition requires an innate biological endowment — the <strong>Language Acquisition Device (LAD)</strong>. His generative grammar revolutionized both linguistics and psychology.</p>
+        </div>
+        <div class="pioneer-card">
+          <div class="name">Jerome Bruner</div>
+          <div class="years">1915 — 2016</div>
+          <p>Co-founded the Harvard Center for Cognitive Studies. Pioneered research on <strong>perception, cognition, and education</strong>. His work on <strong>constructivist learning</strong> — that learners actively construct knowledge rather than passively receive it — transformed education theory worldwide.</p>
+        </div>
+        <div class="pioneer-card">
+          <div class="name">Allen Newell & Herbert Simon</div>
+          <div class="years">1927–1992 & 1916–2001</div>
+          <p>Created the <strong>Logic Theorist</strong> (1956) — the first AI program to mimic human problem-solving. Won the Nobel Prize in Economics (Simon, 1978) for work on bounded rationality. Their <strong>physical symbol system hypothesis</strong> claimed that intelligence requires symbol manipulation — a foundational idea for both AI and cognitive science.</p>
+        </div>
+        <div class="pioneer-card">
+          <div class="name">Donald Broadbent</div>
+          <div class="years">1926 — 1993</div>
+          <p>British psychologist who created the first comprehensive <strong>information-processing model</strong> of attention. His "filter model" proposed that the mind selects information early in processing. His 1958 book <em>Perception and Communication</em> laid the groundwork for all subsequent attention research.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: What is Cognitive Psychology? -->
+    <div class="slide">
+      <h2>What is Cognitive Psychology?</h2>
+      <div class="quote-box">
+        The mind is what the brain does.
+        <div class="author">— Popular cognitive science maxim</div>
+      </div>
+      <p class="intro-text">
+        Cognitive psychology is the scientific study of <strong>mental processes</strong> — how people perceive, learn, remember, think, reason, problem-solve, and use language. It emerged as a direct rebellion against behaviorism's refusal to study the mind, using the <span class="highlight">computer as a metaphor</span> for human information processing.
+      </p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>🖥️ The Computer Metaphor</h4>
+          <p>The mind is like a <strong>computer</strong>: it receives input (sensory data), processes it (attention, memory, thinking), and produces output (behavior). This made the mind scientifically tractable for the first time since behaviorism.</p>
+        </div>
+        <div class="concept-card">
+          <h4>📥 Information Processing</h4>
+          <p>Cognition is a <strong>flow of information</strong> through stages: encoding → storage → retrieval. Each stage can be measured, modeled, and tested experimentally.</p>
+        </div>
+        <div class="concept-card">
+          <h4>🧬 Mental Representations</h4>
+          <p>The mind creates <strong>internal symbols, images, and schemas</strong> that stand for objects and ideas in the world. These representations are the raw material of thought.</p>
+        </div>
+        <div class="concept-card">
+          <h4>⚙️ Cognitive Architecture</h4>
+          <p>The mind has a <strong>fixed structure</strong> with specialized components: sensory registers, short-term memory, long-term memory, executive control. Each has limited capacity and specific functions.</p>
+        </div>
+      </div>
+      <div class="footer-callout">
+        <strong>The Core Insight:</strong> The mind can be studied scientifically — not through introspection (Wundt) or ignored (Watson), but through <em>experiments that reveal its hidden machinery</em>.
+      </div>
+    </div>
+
+    <!-- Slide 4: Key Concepts -->
+    <div class="slide">
+      <h2>Core Concepts & Models</h2>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>🧠 The Atkinson-Shiffrin Model</h4>
+          <p>The classic <strong>three-store model</strong>: sensory memory → short-term memory → long-term memory. Information flows through each stage, with rehearsal determining what gets stored permanently.</p>
+        </div>
+        <div class="concept-card">
+          <h4>📊 Working Memory (Baddeley)</h4>
+          <p>A more dynamic model replacing "short-term memory." Includes the <strong>phonological loop</strong> (verbal), <strong>visuospatial sketchpad</strong> (visual), <strong>episodic buffer</strong> (integration), and the <strong>central executive</strong> (control).</p>
+        </div>
+        <div class="concept-card">
+          <h4>🎯 Selective Attention</h4>
+          <p>Broadbent's <strong>filter model</strong> and later Treisman's <strong>attenuation model</strong> explain how we focus on relevant stimuli while filtering out distractions — the "cocktail party effect."</p>
+        </div>
+        <div class="concept-card">
+          <h4>🗣️ Language & Chomsky</h4>
+          <p>Humans possess an innate <strong>universal grammar</strong> and a Language Acquisition Device (LAD). Children don't learn language through imitation — they generate sentences they've never heard.</p>
+        </div>
+        <div class="concept-card">
+          <h4>💡 Problem-Solving & Heuristics</h4>
+          <p>Humans use mental <strong>shortcuts (heuristics)</strong> like availability, representativeness, and anchoring. Kahneman & Tversky showed these lead to systematic biases — the foundation of behavioral economics.</p>
+        </div>
+        <div class="concept-card">
+          <h4>🧩 Schemas & Scripts</h4>
+          <p>Bartlett showed memory is <strong>reconstructive</strong>, not reproductive. We organize knowledge into schemas (mental frameworks) and scripts (expected event sequences) that shape what we remember and expect.</p>
+        </div>
+        <div class="concept-card">
+          <h4>🔗 Connectionism (PDP)</h4>
+          <p>The brain processes information in <strong>parallel distributed networks</strong> of simple units, not sequential symbol manipulation. This "neural network" approach bridges cognitive psychology and neuroscience.</p>
+        </div>
+        <div class="concept-card">
+          <h4>🧪 Cognitive Neuroscience</h4>
+          <p>Modern fMRI, PET, and EEG allow us to <strong>see the brain in action</strong> during cognitive tasks. The field has localized functions like working memory (prefrontal cortex) and face recognition (fusiform gyrus).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Comparison -->
+    <div class="slide">
+      <h2>Cognitive Psychology vs. Behaviorism</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Cognitive Psychology</th>
+            <th>Behaviorism (Watson/Skinner)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Subject Matter</td>
+            <td><strong>Mental processes</strong>: memory, attention, thinking, language</td>
+            <td>Observable <strong>behavior only</strong> — mind is a black box</td>
+          </tr>
+          <tr>
+            <td>Metaphor</td>
+            <td>The mind is a <strong>computer</strong> (information processor)</td>
+            <td>The organism is a <strong>machine</strong> (S-R device)</td>
+          </tr>
+          <tr>
+            <td>Method</td>
+            <td>Reaction time, memory tasks, brain imaging, <strong>computer modeling</strong></td>
+            <td>Conditioning, reinforcement schedules, stimulus control</td>
+          </tr>
+          <tr>
+            <td>View of Mind</td>
+            <td>The mind is <strong>active, structured, and computational</strong></td>
+            <td>The mind is irrelevant — only behavior matters</td>
+          </tr>
+          <tr>
+            <td>Language</td>
+            <td>Innate biological endowment <strong>(Chomsky)</strong> — generative grammar</td>
+            <td>Verbal behavior shaped by <strong>reinforcement (Skinner)</strong></td>
+          </tr>
+          <tr>
+            <td>Learning</td>
+            <td>Involves <strong>internal representations</strong>, schemas, and restructuring</td>
+            <td>Stimulus-response associations through reinforcement</td>
+          </tr>
+          <tr>
+            <td>Nature vs. Nurture</td>
+            <td><strong>Interactionist</strong> — innate structures + environmental input</td>
+            <td>Extreme <strong>nurture</strong> — environment shapes everything</td>
+          </tr>
+          <tr>
+            <td>Legacy</td>
+            <td>Dominant paradigm today; merged with <strong>neuroscience and AI</strong></td>
+            <td>Behavior therapy; faded as dominant theoretical framework</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Slide 6: Legacy -->
+    <div class="slide">
+      <h2>Legacy & Modern Influence</h2>
+      <div class="quote-box">
+        We are at the beginning of a new era in psychology — one in which the mind, banished for half a century, has returned to claim its rightful place.
+        <div class="author">— Howard Gardner, <em>The Mind's New Science</em> (1985)</div>
+      </div>
+      <ul class="legacy-list">
+        <li><strong>Cognitive Neuroscience:</strong> The marriage of cognitive psychology with brain imaging (fMRI, EEG) has created one of the fastest-growing fields in science, mapping mental processes to neural circuits.</li>
+        <li><strong>Artificial Intelligence:</strong> Cognitive psychology and AI are deeply intertwined. Neural networks, natural language processing, and machine learning all draw on cognitive models of memory, attention, and learning.</li>
+        <li><strong>Cognitive Behavioral Therapy (CBT):</strong> Aaron Beck merged cognitive theory with behaviorist techniques to create <strong>CBT</strong> — now the most evidence-based and widely practiced form of psychotherapy worldwide.</li>
+        <li><strong>Education:</strong> Constructivist learning, active recall, spaced repetition, and multimedia learning principles all derive from cognitive research. They have revolutionized teaching and EdTech.</li>
+        <li><strong>Human-Computer Interaction (HCI):</strong> Cognitive psychology informs UX design, interface layout, and human factors engineering — ensuring technology aligns with how the mind actually works.</li>
+        <li><strong>Behavioral Economics:</strong> Kahneman & Tversky's heuristics-and-biases research, rooted in cognitive psychology, won a Nobel Prize and transformed economics, marketing, and public policy.</li>
+        <li><strong>Forensic Psychology:</strong> Cognitive research on eyewitness testimony, false memories, and interrogation techniques has changed how courts evaluate evidence and how police conduct interviews.</li>
+        <li><strong>The Future:</strong> Cognitive psychology continues to evolve with <strong>computational psychiatry, brain-computer interfaces, and AI alignment</strong> — ensuring the study of the mind remains at the cutting edge of science.</li>
+      </ul>
+      <div class="footer-callout">
+        <strong>Cognitive psychology did not just bring the mind back into science — it showed that the mind, like the universe, can be mapped, measured, and understood.</strong>
+      </div>
+    </div>
+
+    <div class="slide-counter" id="slideCounter">1 / 6</div>
+  </div>
+
+  <div class="nav-arrows">
+    <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+    <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const totalSlides = 6;
+  const slides = document.querySelectorAll('.slide');
+  const navButtons = document.querySelectorAll('.nav button');
+  const progressFill = document.getElementById('progressFill');
+  const slideCounter = document.getElementById('slideCounter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function showSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    currentSlide = index;
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    navButtons.forEach((b, i) => {
+      b.classList.toggle('active', i === index);
+    });
+
+    progressFill.style.width = ((index + 1) / totalSlides * 100) + '%';
+    slideCounter.textContent = (index + 1) + ' / ' + totalSlides;
+
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === totalSlides - 1;
+
+    document.querySelector('.content').scrollTop = 0;
+  }
+
+  function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      changeSlide(1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      changeSlide(-1);
+    }
+  });
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const content = document.querySelector('.content');
+
+  content.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  content.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) changeSlide(1);
+      else changeSlide(-1);
+    }
+  }, { passive: true });
+
+  showSlide(0);
+</script>
+
+</body>
+</html>
